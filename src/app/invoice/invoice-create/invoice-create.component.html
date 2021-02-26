@@ -1,0 +1,172 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="center">
+      စာရင်းသစ်ပြုလုပ်ရန်
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button id="changeText" (click)="this.appSetting.dismissModal()">
+        <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-list>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="stacked">
+                  <h6>ပစ္စည်းအမည်</h6>
+                </ion-label>
+                <ion-input></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="stacked">
+                  <h6>ဈေးနှုန်း</h6>
+                </ion-label>
+                <ion-input></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="stacked">
+                  <h6>အရေတွက်</h6>
+                </ion-label>
+                <ion-input></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="stacked">
+                  <h6>ကျသင့်ငွေ</h6>
+                </ion-label>
+                <ion-input></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+
+
+
+
+      </ion-list>
+    </ion-card-content>
+
+    <ion-button expand="block">
+      စာရင်းထဲပေါင်းထည့်မည်
+    </ion-button>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>ကုန်ပစ္စည်းများစာရင်း</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+
+      <div class="container">
+        <table class="tbl">
+          <tr>
+            <th class="row">စဉ်</th>
+            <th class="row">ပစ္စည်းအမည်</th>
+            <th class="row">ဈေးနှုန်း</th>
+            <th class="row">အရေတွက်</th>
+            <th colspan="3" class="row">ကျသင့်ငွေ</th>
+          </tr>
+
+          <tr>
+            <td class="row">1</td>
+            <td class="row">ပစ္စည်းအမည်</td>
+            <td class="row">9000</td>
+            <td class="row">1</td>
+            <td colspan="1" class="row">9000
+            </td>
+            <td colspan="1" class="row">
+              <ion-button expand="block" fill="clear" shape="round">
+                <ion-icon name="create-outline"></ion-icon>
+              </ion-button>
+
+            </td>
+            <td colspan="1" class="row">
+              <ion-button expand="block" color="danger" fill="clear" shape="round">
+                <ion-icon name="close-circle-outline"></ion-icon>
+              </ion-button>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="row">2</td>
+            <td class="row">ပစ္စည်းအမည်</td>
+            <td class="row">9000</td>
+            <td class="row">1</td>
+            <td colspan="1" class="row">9000
+            </td>
+            <td colspan="1" class="row">
+              <ion-button expand="block" fill="clear" shape="round">
+                <ion-icon name="create-outline"></ion-icon>
+              </ion-button>
+
+            </td>
+            <td colspan="1" class="row">
+              <ion-button expand="block" color="danger" fill="clear" shape="round">
+                <ion-icon name="close-circle-outline"></ion-icon>
+              </ion-button>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="3" class="row">စုစုပေါင်း</td>
+            <td class="row">1</td>
+            <td colspan="3" class="row">18000
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <ion-list>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="stacked">
+                  <h6>ကုန်သည်အမည်</h6>
+                </ion-label>
+                <ion-input></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="stacked">
+                  <h6>ဖုန်းနံပါတ်</h6>
+                </ion-label>
+                <ion-input></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="stacked">
+                  <h6>ရက်စွဲ</h6>
+                </ion-label>
+                <ion-input></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+    </ion-card-content>
+
+    <ion-button expand="block">
+      သိမ်းဆည်းမည်
+    </ion-button>
+
+  </ion-card>
+
+
+</ion-content>

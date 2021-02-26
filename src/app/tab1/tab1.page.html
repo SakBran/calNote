@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button id="changeText" (click)="createModal()">
+        <ion-icon slot="start" name="create-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="center">
+      စာရင်းများ
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button id="changeText" (click)="searchModal()">
+        <ion-icon slot="start" name="search-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-invoice-list></app-invoice-list>
+</ion-content>
