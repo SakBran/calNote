@@ -1,3 +1,4 @@
+import { appSetting } from './../../../Settings/appSetting';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InvoiceSearchComponent implements OnInit {
 
-  constructor() { }
+  constructor(public appSetting:appSetting) { }
 
   ngOnInit() {}
 

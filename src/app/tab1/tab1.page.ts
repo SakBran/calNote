@@ -1,7 +1,7 @@
 import { appSetting } from './../Settings/appSetting';
 import { Component } from '@angular/core';
-import { InvoiceListComponent } from '../invoice/invoice-list/invoice-list.component';
 import { InvoiceCreateComponent } from '../invoice/invoice-create/invoice-create.component';
+import { InvoiceSearchComponent } from '../invoice/invoiceSearch/invoice-search/invoice-search.component';
 
 @Component({
   selector: 'app-tab1',
@@ -11,7 +11,7 @@ import { InvoiceCreateComponent } from '../invoice/invoice-create/invoice-create
 export class Tab1Page {
   constructor(private appSetting:appSetting) {}
   async searchModal(){
-    await this.appSetting.presentModal(InvoiceListComponent);
+    await this.appSetting.presentModal(InvoiceSearchComponent);
   }
 
   async createModal(){

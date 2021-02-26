@@ -1,11 +1,29 @@
 <div id="container">
   <ion-card button *ngFor="let item of collection">
     <ion-card-header>
-      <ion-card-subtitle>ရက်စွဲ 1/12/2020</ion-card-subtitle>
+
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="6">
+            <ion-card-subtitle class="ion-text-start">
+              <ion-text>ရက်စွဲ 1/12/2020
+              </ion-text>
+            </ion-card-subtitle>
+          </ion-col>
+          <ion-col size="6">
+            <ion-card-subtitle class="ion-text-end">
+              <ion-text>
+                စာရင်းအမှတ် : {{item}}
+              </ion-text>
+            </ion-card-subtitle>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
       <ion-card-title>ကုန်သည် ဦးမောင်မောင်</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      ဖုန်း 09123456789<br/>
+      ဖုန်း 09123456789<br />
       ပမာဏ 5000 ကျပ်
     </ion-card-content>
   </ion-card>

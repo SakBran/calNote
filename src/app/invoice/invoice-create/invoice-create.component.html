@@ -14,6 +14,10 @@
 <ion-content>
 
   <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>ကုန်ပစ္စည်း အသစ်ထည့်ခြင်း/ပြုပြင်ခြင်း</ion-card-subtitle>
+    </ion-card-header>
+
     <ion-card-content>
       <ion-list>
         <ion-grid>
@@ -138,7 +142,7 @@
                 <ion-label position="stacked">
                   <h6>ကုန်သည်အမည်</h6>
                 </ion-label>
-                <ion-input></ion-input>
+                <ion-auto-complete [dataProvider]=""></ion-auto-complete>
               </ion-item>
             </ion-col>
             <ion-col size="6">
@@ -157,11 +161,30 @@
                 <ion-input></ion-input>
               </ion-item>
             </ion-col>
+
+
+
+            <ion-col size="12">
+              <ion-radio-group value="biff">
+                <ion-item lines="none">
+                  <ion-label>
+                    <p>ငွေရှင်းပြီးစာရင်း</p>
+                  </ion-label>
+                  <ion-radio slot="start" value="biff"></ion-radio>
+                </ion-item>
+
+                <ion-item lines="none">
+                  <ion-label>
+                    <p>ငွေရှင်းရန်ကျန်ရှိစာရင်း</p>
+                  </ion-label>
+                  <ion-radio slot="start" value="griff"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-col>
           </ion-row>
         </ion-grid>
       </ion-list>
     </ion-card-content>
-
     <ion-button expand="block">
       သိမ်းဆည်းမည်
     </ion-button>

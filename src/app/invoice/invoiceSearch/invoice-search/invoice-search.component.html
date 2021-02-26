@@ -1,3 +1,79 @@
-<p>
-  invoice-search works!
-</p>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="center">
+      ရှာဖွေစစ်ဆေးရန်
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button id="changeText" (click)="this.appSetting.dismissModal()">
+        <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>စာရင်းအချက်လက် ရှာဖွေခြင်း</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="stacked">
+                  <h6>ကုန်သည်</h6>
+                </ion-label>
+                <ion-input></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="stacked">
+                  <h6>ရက်စွဲ အစ</h6>
+                </ion-label>
+                <ion-input></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item>
+                <ion-label position="stacked">
+                  <h6>ရက်စွဲ အဆုံး</h6>
+                </ion-label>
+                <ion-input></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-radio-group value="biff">
+                <ion-item lines="none">
+                  <ion-label><p>ငွေရှင်းပြီးစာရင်း</p></ion-label>
+                  <ion-radio slot="start" value="biff"></ion-radio>
+                </ion-item>
+
+                <ion-item lines="none">
+                  <ion-label><p>ငွေရှင်းရန်ကျန်ရှိစာရင်း</p></ion-label>
+                  <ion-radio slot="start" value="griff"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+
+
+
+
+
+      </ion-list>
+    </ion-card-content>
+
+    <ion-button expand="block">
+      ရှာဖွေမည်
+    </ion-button>
+  </ion-card>
+
+</ion-content>
