@@ -27,9 +27,21 @@
                 <ion-label position="stacked">
                   <h6>ပစ္စည်းအမည်</h6>
                 </ion-label>
-                <ion-input></ion-input>
+                <ion-input debounce="500" (ionChange)="getItems($event)"></ion-input>
               </ion-item>
             </ion-col>
+
+            <ion-col size="12" *ngIf="isItemAvailable">
+              <ion-card button *ngFor="let item of items">
+                <ion-card-header>
+                  <ion-card-subtitle>ဦးမောင်မောင်</ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content>
+                  092012965 {{ item }}
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+
             <ion-col size="6">
               <ion-item>
                 <ion-label position="stacked">
@@ -140,10 +152,20 @@
             <ion-col size="12">
               <ion-item>
                 <ion-label position="stacked">
-                  <h6>ကုန်သည်အမည်</h6>
+                  <h6>ကုန်သည်</h6>
                 </ion-label>
-                <ion-auto-complete [dataProvider]=""></ion-auto-complete>
+                <ion-input debounce="500" (ionChange)="getItems($event)"></ion-input>
               </ion-item>
+            </ion-col>
+            <ion-col size="12" *ngIf="isItemAvailable">
+              <ion-card button *ngFor="let item of items">
+                <ion-card-header>
+                  <ion-card-subtitle>ဦးမောင်မောင်</ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content>
+                  092012965 {{ item }}
+                </ion-card-content>
+              </ion-card>
             </ion-col>
             <ion-col size="6">
               <ion-item>

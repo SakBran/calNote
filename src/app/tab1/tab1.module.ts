@@ -9,7 +9,7 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { InvoiceListComponent } from '../invoice/invoice-list/invoice-list.component';
 import { InvoiceSearchComponent } from '../invoice/invoiceSearch/invoice-search/invoice-search.component';
-import { AutoCompleteModule } from 'ionic4-auto-complete';
+
 
 @NgModule({
   imports: [
@@ -17,8 +17,7 @@ import { AutoCompleteModule } from 'ionic4-auto-complete';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    Tab1PageRoutingModule,
-    AutoCompleteModule
+    Tab1PageRoutingModule
   ],
   declarations: [Tab1Page,InvoiceListComponent,InvoiceCreateComponent,InvoiceSearchComponent]
 })
