@@ -2,5 +2,7 @@ export const setting = {
   clientModel: "client",
   invoiceModel:"invoice",
   invoiceDetailModel:"invoiceDetail",
-  itemModel:"item"
+  invoiceDetailFixed:"invoiceDetailFixed",
+  itemModel:"item",
+  insertedId:0
 };

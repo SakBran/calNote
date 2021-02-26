@@ -1,9 +1,9 @@
 export class itemModel {
-  itemName:string;
+  id:string;
   itemPrice:number;
 
   constructor() {
-    this.itemName="";
+    this.id="";
     this.itemPrice=0;
   }
 }

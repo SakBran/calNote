@@ -27,19 +27,22 @@
                 <ion-label position="stacked">
                   <h6>ပစ္စည်းအမည်</h6>
                 </ion-label>
-                <ion-input debounce="500" (ionChange)="getItems($event)"></ion-input>
+                <ion-input [(ngModel)]="this.invoiceData.itemName" debounce="500" (ionChange)="getItems($event)">
+                </ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col size="12" *ngIf="isItemAvailable">
-              <ion-card button *ngFor="let item of items">
-                <ion-card-header>
-                  <ion-card-subtitle>ဦးမောင်မောင်</ion-card-subtitle>
-                </ion-card-header>
-                <ion-card-content>
-                  092012965 {{ item }}
-                </ion-card-content>
-              </ion-card>
+              <div *ngFor="let item of items">
+                <ion-card button (click)="autoCompleteItem(item)">
+                  <ion-card-header>
+                    <ion-card-subtitle>{{item.id}}</ion-card-subtitle>
+                  </ion-card-header>
+                  <ion-card-content>
+                    {{ item.itemPrice}}
+                  </ion-card-content>
+                </ion-card>
+              </div>
             </ion-col>
 
             <ion-col size="6">
@@ -47,7 +50,7 @@
                 <ion-label position="stacked">
                   <h6>ဈေးနှုန်း</h6>
                 </ion-label>
-                <ion-input></ion-input>
+                <ion-input [(ngModel)]="this.invoiceData.itemPrice"></ion-input>
               </ion-item>
             </ion-col>
             <ion-col size="6">
@@ -55,7 +58,7 @@
                 <ion-label position="stacked">
                   <h6>အရေတွက်</h6>
                 </ion-label>
-                <ion-input></ion-input>
+                <ion-input [(ngModel)]="this.invoiceData.itemQty"></ion-input>
               </ion-item>
             </ion-col>
             <ion-col size="12">
@@ -63,7 +66,7 @@
                 <ion-label position="stacked">
                   <h6>ကျသင့်ငွေ</h6>
                 </ion-label>
-                <ion-input></ion-input>
+                <ion-input value={{+this.invoiceData.itemQty*+this.invoiceData.itemPrice}} readonly></ion-input>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -76,7 +79,7 @@
       </ion-list>
     </ion-card-content>
 
-    <ion-button expand="block">
+    <ion-button (click)="addToInvoice()" expand="block">
       စာရင်းထဲပေါင်းထည့်မည်
     </ion-button>
   </ion-card>
@@ -88,7 +91,7 @@
     <ion-card-content>
 
       <div class="container">
-        <table class="tbl">
+        <table *ngIf="this.invoiceDataList" class="tbl">
           <tr>
             <th class="row">စဉ်</th>
             <th class="row">ပစ္စည်းအမည်</th>
@@ -97,50 +100,31 @@
             <th colspan="3" class="row">ကျသင့်ငွေ</th>
           </tr>
 
-          <tr>
-            <td class="row">1</td>
-            <td class="row">ပစ္စည်းအမည်</td>
-            <td class="row">9000</td>
-            <td class="row">1</td>
-            <td colspan="1" class="row">9000
+          <tr *ngFor="let x of this.invoiceDataList;let i=index;">
+            <td class="row">{{i+1}}</td>
+            <td class="row">{{x.itemName}}</td>
+            <td class="row">{{x.itemPrice}}</td>
+            <td class="row">{{x.itemQty}}</td>
+            <td colspan="1" class="row">{{(+x.itemQty)*(+x.itemPrice)}}
             </td>
             <td colspan="1" class="row">
-              <ion-button expand="block" fill="clear" shape="round">
+              <ion-button (click)="editFromInvoice(x.id)" expand="block" fill="clear" shape="round">
                 <ion-icon name="create-outline"></ion-icon>
               </ion-button>
 
             </td>
             <td colspan="1" class="row">
-              <ion-button expand="block" color="danger" fill="clear" shape="round">
+              <ion-button (click)="removeFromInvoice(x.id)" expand="block" color="danger" fill="clear" shape="round">
                 <ion-icon name="close-circle-outline"></ion-icon>
               </ion-button>
             </td>
           </tr>
 
-          <tr>
-            <td class="row">2</td>
-            <td class="row">ပစ္စည်းအမည်</td>
-            <td class="row">9000</td>
-            <td class="row">1</td>
-            <td colspan="1" class="row">9000
-            </td>
-            <td colspan="1" class="row">
-              <ion-button expand="block" fill="clear" shape="round">
-                <ion-icon name="create-outline"></ion-icon>
-              </ion-button>
 
-            </td>
-            <td colspan="1" class="row">
-              <ion-button expand="block" color="danger" fill="clear" shape="round">
-                <ion-icon name="close-circle-outline"></ion-icon>
-              </ion-button>
-            </td>
-          </tr>
 
           <tr>
-            <td colspan="3" class="row">စုစုပေါင်း</td>
-            <td class="row">1</td>
-            <td colspan="3" class="row">18000
+            <td colspan="4" class="row">စုစုပေါင်း</td>
+            <td colspan="3" class="row">{{this.totalAmount()}}
             </td>
           </tr>
         </table>
@@ -154,25 +138,27 @@
                 <ion-label position="stacked">
                   <h6>ကုန်သည်</h6>
                 </ion-label>
-                <ion-input debounce="500" (ionChange)="getItems($event)"></ion-input>
+                <ion-input [(ngModel)]="this.boucher.clientName"  debounce="500" (ionChange)="getClient($event)"></ion-input>
               </ion-item>
             </ion-col>
-            <ion-col size="12" *ngIf="isItemAvailable">
-              <ion-card button *ngFor="let item of items">
-                <ion-card-header>
-                  <ion-card-subtitle>ဦးမောင်မောင်</ion-card-subtitle>
-                </ion-card-header>
-                <ion-card-content>
-                  092012965 {{ item }}
-                </ion-card-content>
-              </ion-card>
+            <ion-col size="12" *ngIf="isItemAvailableClient">
+              <div *ngFor="let item of clients">
+                <ion-card button (click)="autoCompleteClient(item)">
+                  <ion-card-header>
+                    <ion-card-subtitle>{{item.id}}</ion-card-subtitle>
+                  </ion-card-header>
+                  <ion-card-content>
+                    {{ item.clientPhone}}
+                  </ion-card-content>
+                </ion-card>
+              </div>
             </ion-col>
             <ion-col size="6">
               <ion-item>
                 <ion-label position="stacked">
                   <h6>ဖုန်းနံပါတ်</h6>
                 </ion-label>
-                <ion-input></ion-input>
+                <ion-input [(ngModel)]="this.boucher.clientPhone"></ion-input>
               </ion-item>
             </ion-col>
             <ion-col size="6">
@@ -180,26 +166,26 @@
                 <ion-label position="stacked">
                   <h6>ရက်စွဲ</h6>
                 </ion-label>
-                <ion-input></ion-input>
+                <ion-input [(ngModel)]="this.boucher.invoiceDate" type="date"></ion-input>
               </ion-item>
             </ion-col>
 
 
 
             <ion-col size="12">
-              <ion-radio-group value="biff">
+              <ion-radio-group [(ngModel)]="this.boucher.paid" >
                 <ion-item lines="none">
                   <ion-label>
                     <p>ငွေရှင်းပြီးစာရင်း</p>
                   </ion-label>
-                  <ion-radio slot="start" value="biff"></ion-radio>
+                  <ion-radio slot="start" value='true'></ion-radio>
                 </ion-item>
 
                 <ion-item lines="none">
                   <ion-label>
                     <p>ငွေရှင်းရန်ကျန်ရှိစာရင်း</p>
                   </ion-label>
-                  <ion-radio slot="start" value="griff"></ion-radio>
+                  <ion-radio slot="start" value='false'></ion-radio>
                 </ion-item>
               </ion-radio-group>
             </ion-col>
@@ -207,7 +193,7 @@
         </ion-grid>
       </ion-list>
     </ion-card-content>
-    <ion-button expand="block">
+    <ion-button (click)="save()"  expand="block">
       သိမ်းဆည်းမည်
     </ion-button>
 

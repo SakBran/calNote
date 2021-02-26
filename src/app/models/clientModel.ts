@@ -1,9 +1,9 @@
 export class clientModel {
-  clientName:string;
+  id:string;
   clientPhone:string;
 
   constructor() {
-    this.clientName="";
+    this.id="";
     this.clientPhone="";
   }
 }

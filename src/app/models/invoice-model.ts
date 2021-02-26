@@ -1,16 +1,16 @@
 export class invoiceModel {
-  inoviceID:number;
+  id:number;
   invoiceDate:Date;
   clientName:string;
   clientPhone:string;
   totalAmount:number;
-  paid:boolean;
+  paid:string;
   constructor(){
-    this.inoviceID=0;
+    this.id=0;
     this.invoiceDate=new Date(Date.now());
     this.clientName="";
     this.clientPhone="";
     this.totalAmount=0;
-    this.paid=true;
+    this.paid="true";
   }
 }
