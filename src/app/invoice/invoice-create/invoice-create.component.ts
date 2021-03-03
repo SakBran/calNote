@@ -3,7 +3,7 @@ import { setting } from './../../Settings/constantVar';
 import { invoiceDetail } from './../../models/invoiceDetail';
 import { LocalStorageService } from './../../Services/localStorage/local-storage.service';
 import { appSetting } from './../../Settings/appSetting';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { itemModel } from 'src/app/models/itemModel';
 import { invoiceModel } from 'src/app/models/invoice-model';
 
@@ -13,7 +13,7 @@ import { invoiceModel } from 'src/app/models/invoice-model';
   styleUrls: ['./invoice-create.component.scss'],
 })
 export class InvoiceCreateComponent implements OnInit {
-
+  @Input() id:string;
   constructor(public appSetting: appSetting, private service: LocalStorageService) {
     const temp: invoiceDetail[] = Object.assign(this.service.getLocal(setting.invoiceDetailModel));
     this.invoiceDataList = [...temp];
@@ -135,7 +135,7 @@ export class InvoiceCreateComponent implements OnInit {
     this.clientData.id=this.boucher.clientName;
     this.clientData.clientPhone=this.boucher.clientPhone;
     this.service.syncClient(this.clientData);
-    console.log(this.boucher);
+    this.boucher.totalAmount=+this.totalAmount();
     this.service.post(setting.invoiceModel,this.boucher);
     let id=setting.insertedId;
     this.invoiceDataList.forEach(x=>{

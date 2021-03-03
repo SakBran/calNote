@@ -6,25 +6,25 @@
         <ion-row>
           <ion-col size="6">
             <ion-card-subtitle class="ion-text-start">
-              <ion-text>ရက်စွဲ 1/12/2020
+              <ion-text>ရက်စွဲ {{item.invoiceDate}}
               </ion-text>
             </ion-card-subtitle>
           </ion-col>
           <ion-col size="6">
             <ion-card-subtitle class="ion-text-end">
               <ion-text>
-                စာရင်းအမှတ် : {{item}}
+                စာရင်းအမှတ် : {{item.id}}
               </ion-text>
             </ion-card-subtitle>
           </ion-col>
         </ion-row>
       </ion-grid>
 
-      <ion-card-title>ကုန်သည် ဦးမောင်မောင်</ion-card-title>
+      <ion-card-title>{{item.clientName}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      ဖုန်း 09123456789<br />
-      ပမာဏ 5000 ကျပ်
+      ဖုန်း {{item.clientPhone}}<br />
+      ပမာဏ {{item.totalAmount}} ကျပ်
     </ion-card-content>
   </ion-card>
 </div>
