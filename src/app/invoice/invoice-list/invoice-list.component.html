@@ -1,7 +1,7 @@
 <div id="container">
-  <ion-card button *ngFor="let item of collection">
+  <div *ngFor="let item of this.appSetting.collection">
+  <ion-card (click)="editModal(item.id)"  button >
     <ion-card-header>
-
       <ion-grid fixed>
         <ion-row>
           <ion-col size="6">
@@ -27,4 +27,6 @@
       ပမာဏ {{item.totalAmount}} ကျပ်
     </ion-card-content>
   </ion-card>
+  </div>
 </div>
+

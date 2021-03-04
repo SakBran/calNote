@@ -3,7 +3,7 @@ import { setting } from './../../Settings/constantVar';
 import { invoiceDetail } from './../../models/invoiceDetail';
 import { LocalStorageService } from './../../Services/localStorage/local-storage.service';
 import { appSetting } from './../../Settings/appSetting';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { itemModel } from 'src/app/models/itemModel';
 import { invoiceModel } from 'src/app/models/invoice-model';
 
@@ -12,29 +12,49 @@ import { invoiceModel } from 'src/app/models/invoice-model';
   templateUrl: './invoice-create.component.html',
   styleUrls: ['./invoice-create.component.scss'],
 })
-export class InvoiceCreateComponent implements OnInit {
-  @Input() id:string;
+export class InvoiceCreateComponent implements OnInit, OnDestroy {
+  @Input() id: string;
   constructor(public appSetting: appSetting, private service: LocalStorageService) {
-    const temp: invoiceDetail[] = Object.assign(this.service.getLocal(setting.invoiceDetailModel));
-    this.invoiceDataList = [...temp];
-   }
+    this.dataLoad();
+  }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+  }
   itemData: itemModel = new itemModel();
   clientData: clientModel = new clientModel();
 
   invoiceData: invoiceDetail = new invoiceDetail();
   invoiceDataList: invoiceDetail[] = [];
 
-  boucher:invoiceModel=new invoiceModel();
+  boucher: invoiceModel = new invoiceModel();
 
   isItemAvailable: boolean = false;
   isItemAvailableClient: boolean = false;
   items: itemModel[] = [];
-  clients:clientModel[]=[];
+  clients: clientModel[] = [];
 
-  dataBind_ID(){
-    const temp: invoiceDetail[] = Object.assign(this.service.getLocal(setting.invoiceDetailModel));
+  dataBind_ID() {
+    let temp: invoiceDetail[] = [];
+    temp = Object.assign(this.service.getLocal(setting.invoiceDetailModel));
+    this.invoiceDataList = [...temp];
+  }
+
+  dataLoad() {
+    let temp: invoiceDetail[] = [];
+    if (this.appSetting.invoiceID === 0) {
+      temp = Object.assign(this.service.getLocal(setting.invoiceDetailModel));
+      this.boucher.invoiceDate=new Date(new Date(Date.now()).toDateString());
+    }
+    else {
+      const dataList: invoiceDetail[] = Object.assign(this.service.getLocal(setting.invoiceDetailFixed));
+      temp = [...dataList.filter(x => x.inoviceID === this.appSetting.invoiceID)];
+      this.service.setLocal(temp,setting.invoiceDetailModel);
+      const boucherList: invoiceModel[] = Object.assign(this.service.getLocal(setting.invoiceModel));
+      let bTemp:invoiceModel = [...boucherList.filter(x => x.id === this.appSetting.invoiceID)][0];
+      this.boucher=bTemp;
+    }
+
     this.invoiceDataList = [...temp];
   }
 
@@ -74,7 +94,7 @@ export class InvoiceCreateComponent implements OnInit {
   }
 
   getClient(ev: any) {
-    if(this.boucher.clientPhone===""){
+    if (this.boucher.clientPhone === "") {
       this.initializeClient();
 
       // set val to the value of the searchbar
@@ -106,45 +126,95 @@ export class InvoiceCreateComponent implements OnInit {
     this.service.syncItem(this.itemData);
     this.service.post(setting.invoiceDetailModel, this.invoiceData);
     this.dataBind_ID();
-    this.invoiceData=new invoiceDetail();
+    this.invoiceData = new invoiceDetail();
   }
 
-  editFromInvoice(id:number){
-    this.invoiceData=this.service.getById(setting.invoiceDetailModel,id);
+  editFromInvoice(id: number) {
+    this.invoiceData = this.service.getById(setting.invoiceDetailModel, id);
     this.removeFromInvoice(id);
   }
 
-  removeFromInvoice(id:number){
-    this.service.delete(setting.invoiceDetailModel,id);
+  removeFromInvoice(id: number) {
+    this.service.delete(setting.invoiceDetailModel, id);
     this.dataBind_ID();
   }
 
-  totalAmount():string{
-    if(this.invoiceDataList!==[]){
-      let result=0;
-      this.invoiceDataList.forEach(x=>{
-        result=result+(+x.itemPrice*+x.itemQty)
+  totalAmount(): string {
+    if (this.invoiceDataList !== []) {
+      let result = 0;
+      this.invoiceDataList.forEach(x => {
+        result = result + (+x.itemPrice * +x.itemQty)
       });
       return result.toString();
-    }else{
+    } else {
       return "0";
     }
   }
 
-  save(){
-    this.clientData.id=this.boucher.clientName;
-    this.clientData.clientPhone=this.boucher.clientPhone;
+  save() {
+    if (this.appSetting.invoiceID === 0) {
+      this.saveProcess();
+    }
+    else {
+      this.editProcess();
+    }
+    this.ngOnDestroy();
+  }
+
+  editProcess() {
+    this.clientData.id = this.boucher.clientName;
+    this.clientData.clientPhone = this.boucher.clientPhone;
     this.service.syncClient(this.clientData);
-    this.boucher.totalAmount=+this.totalAmount();
-    this.service.post(setting.invoiceModel,this.boucher);
-    let id=setting.insertedId;
-    this.invoiceDataList.forEach(x=>{
-      x.inoviceID=id;
-      this.service.post(setting.invoiceDetailFixed,x);
+    this.boucher.totalAmount = +this.totalAmount();
+    this.service.delete(setting.invoiceModel,this.appSetting.invoiceID);
+    this.service.post(setting.invoiceModel, this.boucher);
+
+    const dataList: invoiceDetail[] = Object.assign(this.service.getLocal(setting.invoiceDetailFixed));
+    let temp: invoiceDetail[] = [...dataList.filter(x => x.inoviceID === this.appSetting.invoiceID)];
+
+    temp.forEach(x => {
+      console.log(x.inoviceID+" and "+x.id);
+      x.inoviceID = this.appSetting.invoiceID;
+      this.service.delete(setting.invoiceDetailFixed, x.id);
+
+    });
+
+    this.invoiceDataList.forEach(x => {
+      x.inoviceID = this.appSetting.invoiceID;
+      this.service.post(setting.invoiceDetailFixed, x);
+    });
+
+    this.service.clearAll(setting.invoiceDetailModel);
+    this.boucher = new invoiceModel();
+    this.appSetting.dismissModal();
+    this.appSetting.collection = this.service.getLocal(setting.invoiceModel);
+  }
+
+
+  saveProcess() {
+    this.clientData.id = this.boucher.clientName;
+    this.clientData.clientPhone = this.boucher.clientPhone;
+    this.service.syncClient(this.clientData);
+    this.boucher.totalAmount = +this.totalAmount();
+    this.service.post(setting.invoiceModel, this.boucher);
+    let id = setting.insertedId;
+    this.invoiceDataList.forEach(x => {
+      x.inoviceID = id;
+      this.service.post(setting.invoiceDetailFixed, x);
     });
     this.service.clearAll(setting.invoiceDetailModel);
-    this.boucher=new invoiceModel();
+    this.boucher = new invoiceModel();
     this.appSetting.dismissModal();
+    this.appSetting.collection = this.service.getLocal(setting.invoiceModel);
+  }
+
+  ngOnDestroy() {
+    if (this.appSetting.invoiceID !== 0) {
+      this.appSetting.invoiceID = 0;
+    }
+    if (this.invoiceDataList !== []) {
+      this.invoiceDataList = [];
+    }
   }
 
 

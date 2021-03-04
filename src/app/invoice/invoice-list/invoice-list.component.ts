@@ -1,7 +1,8 @@
+import { appSetting } from './../../Settings/appSetting';
 import { setting } from 'src/app/Settings/constantVar';
 import { Component, OnInit } from '@angular/core';
-import { invoiceModel } from 'src/app/models/invoice-model';
 import { LocalStorageService } from 'src/app/Services/localStorage/local-storage.service';
+import { InvoiceCreateComponent } from '../invoice-create/invoice-create.component';
 
 @Component({
   selector: 'app-invoice-list',
@@ -10,13 +11,17 @@ import { LocalStorageService } from 'src/app/Services/localStorage/local-storage
 })
 export class InvoiceListComponent implements OnInit {
 
-  constructor(private service:LocalStorageService) {
-    this.collection=this.service.getLocal(setting.invoiceModel);
+  constructor(private service:LocalStorageService,public appSetting:appSetting) {
+    this.appSetting.collection=this.service.getLocal(setting.invoiceModel);
   }
 
   ngOnInit() {
-    this.collection=this.service.getLocal(setting.invoiceModel);
+    this.appSetting.collection=this.service.getLocal(setting.invoiceModel);
   }
-  collection:invoiceModel[]=[];
 
+  async editModal(id){
+    this.appSetting.invoiceID=+id;
+    await this.appSetting.presentModal(InvoiceCreateComponent);
+  }
 }
+

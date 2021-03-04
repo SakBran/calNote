@@ -1,3 +1,4 @@
+import { invoiceModel } from './../models/invoice-model';
 import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
@@ -9,6 +10,9 @@ export class appSetting{
   constructor(public modalController: ModalController) {
 
   }
+
+  public collection:invoiceModel[]=[];
+  public invoiceID:number=0;
 
   async presentModal(ModalPage) {
     const modal = await this.modalController.create({
