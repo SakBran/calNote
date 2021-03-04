@@ -161,6 +161,17 @@ export class InvoiceCreateComponent implements OnInit, OnDestroy {
     this.ngOnDestroy();
   }
 
+  remove(){
+    this.service.delete(setting.invoiceModel,this.appSetting.invoiceID);
+    const dataList: invoiceDetail[] = Object.assign(this.service.getLocal(setting.invoiceDetailFixed));
+    let temp: invoiceDetail[] = [...dataList.filter(x => x.inoviceID === this.appSetting.invoiceID)];
+    temp.forEach(x=>{
+      this.service.delete(setting.invoiceDetailFixed,x.id);
+    });
+    this.appSetting.collection = this.service.getLocal(setting.invoiceModel);
+    this.appSetting.dismissModal();
+  }
+
   editProcess() {
     this.clientData.id = this.boucher.clientName;
     this.clientData.clientPhone = this.boucher.clientPhone;
@@ -186,8 +197,9 @@ export class InvoiceCreateComponent implements OnInit, OnDestroy {
 
     this.service.clearAll(setting.invoiceDetailModel);
     this.boucher = new invoiceModel();
-    this.appSetting.dismissModal();
     this.appSetting.collection = this.service.getLocal(setting.invoiceModel);
+    this.appSetting.dismissModal();
+
   }
 
 
@@ -196,12 +208,14 @@ export class InvoiceCreateComponent implements OnInit, OnDestroy {
     this.clientData.clientPhone = this.boucher.clientPhone;
     this.service.syncClient(this.clientData);
     this.boucher.totalAmount = +this.totalAmount();
+
     this.service.post(setting.invoiceModel, this.boucher);
     let id = setting.insertedId;
     this.invoiceDataList.forEach(x => {
       x.inoviceID = id;
       this.service.post(setting.invoiceDetailFixed, x);
     });
+
     this.service.clearAll(setting.invoiceDetailModel);
     this.boucher = new invoiceModel();
     this.appSetting.dismissModal();

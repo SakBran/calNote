@@ -196,6 +196,9 @@
     <ion-button (click)="save()"  expand="block">
       သိမ်းဆည်းမည်
     </ion-button>
+    <ion-button color="danger" *ngIf="this.appSetting.invoiceID!==0"  (click)="remove()"  expand="block">
+      ပယ်ဖျက်မည်
+    </ion-button>
 
   </ion-card>
 
