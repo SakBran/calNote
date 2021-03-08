@@ -9,6 +9,7 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { InvoiceListComponent } from '../invoice/invoice-list/invoice-list.component';
 import { InvoiceSearchComponent } from '../invoice/invoiceSearch/invoice-search/invoice-search.component';
+import { TableOnlyComponent } from '../invoice/tableOnly/table-only/table-only.component';
 
 
 @NgModule({
@@ -19,6 +20,6 @@ import { InvoiceSearchComponent } from '../invoice/invoiceSearch/invoice-search/
     ExploreContainerComponentModule,
     Tab1PageRoutingModule
   ],
-  declarations: [Tab1Page,InvoiceListComponent,InvoiceCreateComponent,InvoiceSearchComponent]
+  declarations: [Tab1Page,InvoiceListComponent,InvoiceCreateComponent,InvoiceSearchComponent,TableOnlyComponent]
 })
 export class Tab1PageModule {}

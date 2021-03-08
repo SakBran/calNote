@@ -6,6 +6,7 @@ import { appSetting } from './../../Settings/appSetting';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { itemModel } from 'src/app/models/itemModel';
 import { invoiceModel } from 'src/app/models/invoice-model';
+import { TableOnlyComponent } from '../tableOnly/table-only/table-only.component';
 
 @Component({
   selector: 'app-invoice-create',
@@ -218,10 +219,15 @@ export class InvoiceCreateComponent implements OnInit, OnDestroy {
 
     this.service.clearAll(setting.invoiceDetailModel);
     this.boucher = new invoiceModel();
-    this.appSetting.dismissModal();
     this.appSetting.collection = this.service.getLocal(setting.invoiceModel);
+    this.appSetting.dismissModal();
   }
 
+  async tableModal(){
+    this.appSetting.tableData=[...this.invoiceDataList];
+    this.appSetting.tableInfo=this.boucher;
+    await this.appSetting.presentModal(TableOnlyComponent);
+  }
   ngOnDestroy() {
     if (this.appSetting.invoiceID !== 0) {
       this.appSetting.invoiceID = 0;
@@ -229,6 +235,7 @@ export class InvoiceCreateComponent implements OnInit, OnDestroy {
     if (this.invoiceDataList !== []) {
       this.invoiceDataList = [];
     }
+    this.service.clearAll(setting.invoiceDetailModel);
   }
 
 

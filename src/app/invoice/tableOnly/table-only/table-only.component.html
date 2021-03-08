@@ -1,0 +1,58 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title  class="center">
+      ရက်စွဲ {{this.appSetting.tableInfo.invoiceDate|date}}
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button id="changeText" (click)="this.appSetting.dismissModal()">
+        <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+
+    <table *ngIf="this.appSetting.tableData" class="tbl">
+      <caption class="row">ကုန်ပစ္စည်းများစာရင်း</caption>
+      <tr>
+        <td colspan="2" id="no" class="row">ကုန်သည်</td>
+        <td colspan="3" id="item" class="row">{{this.appSetting.tableInfo.clientName}}</td>
+      </tr>
+
+      <tr>
+        <td colspan="2" id="no" class="row">ဖုန်းနံပါတ်</td>
+        <td colspan="3" id="item" class="row">{{this.appSetting.tableInfo.clientPhone}}</td>
+      </tr>
+
+
+      <tr>
+        <th id="no" class="row">စဉ်</th>
+        <th id="item" class="row">ပစ္စည်း</th>
+        <th id="price" class="row">ဈေးနှုန်း</th>
+        <th id="qty" class="row">အရေတွက်</th>
+        <th id="amount" class="row">ကျသင့်ငွေ</th>
+      </tr>
+
+      <tr *ngFor="let x of this.appSetting.tableData;let i=index;">
+        <td class="row">{{i+1}}</td>
+        <td class="row">{{x.itemName}}</td>
+        <td class="row">{{x.itemPrice}}</td>
+        <td class="row">{{x.itemQty}}</td>
+        <td class="row">{{(+x.itemQty)*(+x.itemPrice)}}
+        </td>
+
+      </tr>
+
+
+
+      <tr>
+        <td colspan="4" class="row">စုစုပေါင်း</td>
+        <td colspan="1" class="row">{{this.totalAmount()}}</td>
+
+      </tr>
+    </table>
+  </div>
+</ion-content>

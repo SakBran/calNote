@@ -1,8 +1,12 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title class="center">
+    <ion-title *ngIf="this.appSetting.invoiceID===0"  class="center">
       စာရင်းသစ်ပြုလုပ်ရန်
     </ion-title>
+    <ion-title *ngIf="this.appSetting.invoiceID!==0"  class="center">
+      စာရင်းပြင်ရန်
+    </ion-title>
+
     <ion-buttons slot="end">
       <ion-button id="changeText" (click)="this.appSetting.dismissModal()">
         <ion-icon slot="start" name="close-circle-outline"></ion-icon>
@@ -45,7 +49,7 @@
               </div>
             </ion-col>
 
-            <ion-col size="6">
+            <ion-col size="12">
               <ion-item>
                 <ion-label position="stacked">
                   <h6>ဈေးနှုန်း</h6>
@@ -53,7 +57,7 @@
                 <ion-input type="number" [(ngModel)]="this.invoiceData.itemPrice"></ion-input>
               </ion-item>
             </ion-col>
-            <ion-col size="6">
+            <ion-col size="12">
               <ion-item>
                 <ion-label position="stacked">
                   <h6>အရေတွက်</h6>
@@ -66,7 +70,8 @@
                 <ion-label position="stacked">
                   <h6>ကျသင့်ငွေ</h6>
                 </ion-label>
-                <ion-input type="number" value={{+this.invoiceData.itemQty*+this.invoiceData.itemPrice}} readonly></ion-input>
+                <ion-input type="number" value={{+this.invoiceData.itemQty*+this.invoiceData.itemPrice}} readonly>
+                </ion-input>
               </ion-item>
             </ion-col>
           </ion-row>
@@ -85,19 +90,20 @@
   </ion-card>
 
   <ion-card>
-    <ion-card-header>
-      <ion-card-subtitle>ကုန်ပစ္စည်းများစာရင်း</ion-card-subtitle>
-    </ion-card-header>
+
     <ion-card-content>
 
       <div class="container">
+
         <table *ngIf="this.invoiceDataList" class="tbl">
+          <caption class="row">ကုန်ပစ္စည်းများစာရင်း</caption>
           <tr>
-            <th class="row">စဉ်</th>
-            <th class="row">ပစ္စည်းအမည်</th>
-            <th class="row">ဈေးနှုန်း</th>
-            <th class="row">အရေတွက်</th>
-            <th colspan="3" class="row">ကျသင့်ငွေ</th>
+            <th id="no" class="row">စဉ်</th>
+            <th id="item" class="row">ပစ္စည်း</th>
+            <th id="price" class="row">ဈေးနှုန်း</th>
+            <th id="qty" class="row">အရေတွက်</th>
+            <th id="amount" class="row">ကျသင့်ငွေ</th>
+            <th id="action" colspan="2" class="row"></th>
           </tr>
 
           <tr *ngFor="let x of this.invoiceDataList;let i=index;">
@@ -124,7 +130,8 @@
 
           <tr>
             <td colspan="4" class="row">စုစုပေါင်း</td>
-            <td colspan="3" class="row">{{this.totalAmount()}}
+            <td colspan="1" class="row">{{this.totalAmount()}}</td>
+            <td colspan="2" class="row">
             </td>
           </tr>
         </table>
@@ -138,7 +145,8 @@
                 <ion-label position="stacked">
                   <h6>ကုန်သည်</h6>
                 </ion-label>
-                <ion-input [(ngModel)]="this.boucher.clientName"  debounce="500" (ionChange)="getClient($event)"></ion-input>
+                <ion-input [(ngModel)]="this.boucher.clientName" debounce="500" (ionChange)="getClient($event)">
+                </ion-input>
               </ion-item>
             </ion-col>
             <ion-col size="12" *ngIf="isItemAvailableClient">
@@ -153,7 +161,7 @@
                 </ion-card>
               </div>
             </ion-col>
-            <ion-col size="6">
+            <ion-col size="12">
               <ion-item>
                 <ion-label position="stacked">
                   <h6>ဖုန်းနံပါတ်</h6>
@@ -161,7 +169,7 @@
                 <ion-input type="tel" [(ngModel)]="this.boucher.clientPhone"></ion-input>
               </ion-item>
             </ion-col>
-            <ion-col size="6">
+            <ion-col size="12">
               <ion-item>
                 <ion-label position="stacked">
                   <h6>ရက်စွဲ</h6>
@@ -173,7 +181,7 @@
 
 
             <ion-col size="12">
-              <ion-radio-group [(ngModel)]="this.boucher.paid" >
+              <ion-radio-group [(ngModel)]="this.boucher.paid">
                 <ion-item lines="none">
                   <ion-label>
                     <p>ငွေရှင်းပြီးစာရင်း</p>
@@ -193,10 +201,15 @@
         </ion-grid>
       </ion-list>
     </ion-card-content>
-    <ion-button (click)="save()"  expand="block">
+
+    <ion-button (click)="save()" expand="block">
       သိမ်းဆည်းမည်
     </ion-button>
-    <ion-button color="danger" *ngIf="this.appSetting.invoiceID!==0"  (click)="remove()"  expand="block">
+    <ion-button color="secondary" *ngIf="this.appSetting.invoiceID!==0" (click)="tableModal()" expand="block">
+      စာရင်းကြည့်မည်
+    </ion-button>
+
+    <ion-button color="danger" *ngIf="this.appSetting.invoiceID!==0" (click)="remove()" expand="block">
       ပယ်ဖျက်မည်
     </ion-button>
 

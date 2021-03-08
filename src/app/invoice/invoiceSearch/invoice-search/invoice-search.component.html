@@ -27,36 +27,63 @@
                 <ion-label position="stacked">
                   <h6>ကုန်သည်</h6>
                 </ion-label>
-                <ion-input></ion-input>
+                <ion-input [(ngModel)]="this.boucher.clientName" debounce="500" (ionChange)="getClient($event)">
+                </ion-input>
               </ion-item>
             </ion-col>
-            <ion-col size="6">
-              <ion-item>
-                <ion-label position="stacked">
-                  <h6>ရက်စွဲ အစ</h6>
-                </ion-label>
-                <ion-input></ion-input>
-              </ion-item>
+            <ion-col size="12" *ngIf="isItemAvailableClient">
+              <div *ngFor="let item of clients">
+                <ion-card button (click)="autoCompleteClient(item)">
+                  <ion-card-header>
+                    <ion-card-subtitle>{{item.id}}</ion-card-subtitle>
+                  </ion-card-header>
+                  <ion-card-content>
+                    {{ item.clientPhone}}
+                  </ion-card-content>
+                </ion-card>
+              </div>
             </ion-col>
-            <ion-col size="6">
+
+            <ion-col size="12">
               <ion-item>
                 <ion-label position="stacked">
-                  <h6>ရက်စွဲ အဆုံး</h6>
+                  <h6>ဖုန်းနံပါတ်</h6>
                 </ion-label>
-                <ion-input></ion-input>
+                <ion-input type="tel" [(ngModel)]="this.boucher.clientPhone"></ion-input>
               </ion-item>
             </ion-col>
 
             <ion-col size="12">
-              <ion-radio-group value="biff">
+              <ion-item>
+                <ion-label position="stacked">
+                  <h6>ရက်စွဲ အစ</h6>
+                </ion-label>
+                <ion-input [(ngModel)]="this.searchData.startDate" type="date"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label position="stacked">
+                  <h6>ရက်စွဲ အဆုံး</h6>
+                </ion-label>
+                <ion-input [(ngModel)]="this.searchData.endDate" type="date"></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-radio-group [(ngModel)]="this.boucher.paid">
                 <ion-item lines="none">
-                  <ion-label><p>ငွေရှင်းပြီးစာရင်း</p></ion-label>
-                  <ion-radio slot="start" value="biff"></ion-radio>
+                  <ion-label>
+                    <p>ငွေရှင်းပြီးစာရင်း</p>
+                  </ion-label>
+                  <ion-radio slot="start" value='true'></ion-radio>
                 </ion-item>
 
                 <ion-item lines="none">
-                  <ion-label><p>ငွေရှင်းရန်ကျန်ရှိစာရင်း</p></ion-label>
-                  <ion-radio slot="start" value="griff"></ion-radio>
+                  <ion-label>
+                    <p>ငွေရှင်းရန်ကျန်ရှိစာရင်း</p>
+                  </ion-label>
+                  <ion-radio slot="start" value='false'></ion-radio>
                 </ion-item>
               </ion-radio-group>
             </ion-col>
@@ -71,7 +98,7 @@
       </ion-list>
     </ion-card-content>
 
-    <ion-button expand="block">
+    <ion-button  (click)="search()"  expand="block">
       ရှာဖွေမည်
     </ion-button>
   </ion-card>

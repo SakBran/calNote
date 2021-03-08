@@ -9,8 +9,11 @@
       စာရင်းများ
     </ion-title>
     <ion-buttons slot="end">
+      <ion-button id="changeText" (click)="refresh()">
+        <ion-icon slot="start" name="refresh-outline"></ion-icon>
+      </ion-button>
       <ion-button id="changeText" (click)="searchModal()">
-        <ion-icon slot="start" name="search-outline"></ion-icon>
+        <ion-icon slot="end" name="search-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
