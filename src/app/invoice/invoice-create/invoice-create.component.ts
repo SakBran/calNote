@@ -179,8 +179,8 @@ export class InvoiceCreateComponent implements OnInit, OnDestroy {
     this.clientData.clientPhone = this.boucher.clientPhone;
     this.service.syncClient(this.clientData);
     this.boucher.totalAmount = +this.totalAmount();
-    this.service.delete(setting.invoiceModel,this.appSetting.invoiceID);
-    this.service.post(setting.invoiceModel, this.boucher);
+
+    this.service.put(setting.invoiceModel, this.appSetting.invoiceID,this.boucher);
 
     const dataList: invoiceDetail[] = Object.assign(this.service.getLocal(setting.invoiceDetailFixed));
     let temp: invoiceDetail[] = [...dataList.filter(x => x.inoviceID === this.appSetting.invoiceID)];

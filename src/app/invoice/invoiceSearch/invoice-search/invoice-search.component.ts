@@ -18,7 +18,10 @@ export class InvoiceSearchComponent implements OnInit {
   clients: clientModel[] = [];
   searchData:searchModel=new searchModel();
 
-  constructor(public appSetting: appSetting, private service: LocalStorageService) { }
+  constructor(public appSetting: appSetting, private service: LocalStorageService) {
+    this.searchData.startDate=null;
+    this.searchData.endDate=null;
+   }
 
   ngOnInit() {}
 
@@ -73,12 +76,12 @@ export class InvoiceSearchComponent implements OnInit {
       invoiceList=[...temp.filter(x=>x.clientPhone===this.searchData.client.clientPhone)];
     }
 
-    if(this.searchData.startDate ){
+    if(this.searchData.startDate && this.searchData.startDate!==null){
       const temp:invoiceModel[]=[...invoiceList];
       invoiceList=[...temp.filter(x=>x.invoiceDate>=this.searchData.startDate)];
     }
 
-    if(this.searchData.endDate ){
+    if(this.searchData.endDate && this.searchData.endDate!==null){
       const temp:invoiceModel[]=[...invoiceList];
       invoiceList=[...temp.filter(x=>x.invoiceDate<=this.searchData.endDate)];
     }

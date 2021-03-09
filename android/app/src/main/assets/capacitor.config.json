@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "ionic-app-base",
+  "appId": "io.ionic.starter.DebtApp.SakBran",
+  "appName": "Debt",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
