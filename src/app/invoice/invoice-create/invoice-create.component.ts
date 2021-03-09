@@ -44,6 +44,7 @@ export class InvoiceCreateComponent implements OnInit, OnDestroy {
   dataLoad() {
     let temp: invoiceDetail[] = [];
     if (this.appSetting.invoiceID === 0) {
+      this.service.clearAll(setting.invoiceDetailModel);
       temp = Object.assign(this.service.getLocal(setting.invoiceDetailModel));
       this.boucher.invoiceDate=new Date(new Date(Date.now()).toDateString());
     }
@@ -188,7 +189,6 @@ export class InvoiceCreateComponent implements OnInit, OnDestroy {
       console.log(x.inoviceID+" and "+x.id);
       x.inoviceID = this.appSetting.invoiceID;
       this.service.delete(setting.invoiceDetailFixed, x.id);
-
     });
 
     this.invoiceDataList.forEach(x => {
@@ -228,6 +228,7 @@ export class InvoiceCreateComponent implements OnInit, OnDestroy {
     this.appSetting.tableInfo=this.boucher;
     await this.appSetting.presentModal(TableOnlyComponent);
   }
+
   ngOnDestroy() {
     if (this.appSetting.invoiceID !== 0) {
       this.appSetting.invoiceID = 0;
@@ -235,7 +236,7 @@ export class InvoiceCreateComponent implements OnInit, OnDestroy {
     if (this.invoiceDataList !== []) {
       this.invoiceDataList = [];
     }
-    this.service.clearAll(setting.invoiceDetailModel);
+    //this.service.clearAll(setting.invoiceDetailModel);
   }
 
 
